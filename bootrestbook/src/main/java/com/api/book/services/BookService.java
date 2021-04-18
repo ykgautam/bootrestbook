@@ -2,6 +2,7 @@ package com.api.book.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -27,8 +28,13 @@ public class BookService {
 	public Book getBookById(int id) {
 //		using stream api to get single book wrt id
 		Book book = null;
-		book = bookList.stream().filter(e -> e.getId() == id).findFirst().get();
-		System.out.println("get single book " + book);
+		try {
+			book = bookList.stream().filter(e -> e.getId() == id).findFirst().get();
+
+		} catch (NoSuchElementException e2) {
+			System.out.println("book id not matched..........");
+			e2.printStackTrace();
+		}
 		return book;
 	}
 
